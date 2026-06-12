@@ -238,6 +238,67 @@
             .ders-ad { font-size: 12px; }
             .ders-header { font-size: 12px; }
         }
+        /* Canlı Haber Bandı Tasarımı */
+.haber-bandi {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #1e293b; /* Koyu modern lacivert */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    z-index: 9999;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.haber-baslik {
+    background: #ef4444; /* Canlı kırmızı */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+}
+
+.haber-akis-alani {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.haber-metni {
+    display: flex;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: haberAkisi 25s linear infinite; /* Akış hızı */
+}
+
+.haber-metni span {
+    padding-right: 50px;
+    font-size: 14px;
+}
+
+/* Sağdan Sola Akma Animasyonu */
+@keyframes haberAkisi {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* Haber bandı alttaki içerikleri kapatmasın diye ana sayfaya boşluk bırakalım */
+body {
+    padding-bottom: 50px;
+}
     </style>
 </head>
 <body>
@@ -505,4 +566,16 @@
     }
     </script>
 </body>
+<!-- CANLI EĞİTİM HABERLERİ ŞERİDİ -->
+<div class="haber-bandi">
+    <div class="haber-baslik">CANLI HABER</div>
+    <div class="haber-akis-alani">
+        <div class="haber-metni">
+            <span>🔥 MEB: LGS Sonuçları Açıklandı! Puanınızı hemen yukarıdaki motorumuzdan hesaplayabilirsiniz...</span>
+            <span>📚 5. Sınıf Türkçe Çalışma Kağıtları Güncellendi, İndirmek İçin Menüyü Kullanın...</span>
+            <span>📢 Öğretmen Atama Takvimi Detayları Belli Oldu...</span>
+            <span>📝 Okullarda Son Hafta Etkinlik Programı Başladı...</span>
+        </div>
+    </div>
+</div>
 </html>
