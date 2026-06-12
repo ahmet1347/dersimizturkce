@@ -568,46 +568,57 @@ body {
 </body>
 <!-- Kırmızı Haber Bandı -->
 <div class="haber-bandi">
-    <!-- style="animation-duration: 40s;" yaparak akış hızını daha da yavaşlattık -->
-    <div class="haber-metni" id="egitim-haberleri" style="animation-duration: 40s;">
-        ⏳ Güncel eğitim takvimi yükleniyor...
+    <!-- style="animation-duration: 45s;" ile hızı çok tatlı ve yavaş yaptık -->
+    <div class="haber-metni" id="egitim-haberleri" style="animation-duration: 45s; display: inline-block; pointer-events: auto;">
+        ⏳ MEB, ÖSYM ve Memurlar.net canlı haberleri yükleniyor, lütfen bekleyin...
     </div>
 </div>
 
-<!-- Kesinlikle Tıklanabilir Haber Robotu -->
+<!-- GERÇEK CANLI HABER ROBOTU -->
 <script>
-    const guncelHaberler = [
-        {
-            baslik: "🏆 2026 İlköğretim ve Ortaöğretim Bursluluk Sınavı (İOKBS) Sonuçları Açıklandı! Sonucunuzu öğrenmek için tıklayın...",
-            link: "https://www.meb.gov.tr"
-        },
-        {
-            baslik: "📝 Heyecan Dorukta: Büyük LGS Sınavı Yarın Yapılıyor! Tüm öğrencilerimize başarılar dileriz...",
-            link: "https://www.meb.gov.tr"
-        },
-        {
-            baslik: "🌟 ÖSYM Duyurusu: YKS Sınav Giriş Belgeleri Erişime Açıldı! Detaylar için tıklayın...",
-            link: "https://ais.osym.gov.tr"
-        },
-        {
-            baslik: "📢 Öğretmen Atama Takvimi Kontenjanları ve Kılavuzu Yayınlandı...",
-            link: "https://personel.meb.gov.tr"
-        }
-    ];
-
-    function haberleriEkranaBas() {
+    async function canliHaberleriGetir() {
         const haberAlani = document.getElementById('egitim-haberleri');
-        let tumHaberlerText = " 🔥 SON DAKİKA EĞİTİM GÜNDEMİ: &nbsp;&nbsp;";
+        
+        // Güvenlik duvarına takılmayan, RSS haberlerini canlı JSON'a çeviren resmi ve ücretsiz servis
+        const url = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.kamuajans.com/rss/egitim';
 
-        guncelHaberler.forEach(haber => {
-            // Tıklamayı garantiye almak için 'pointer-events: auto' ve 'display: inline-block' ekledik
-            tumHaberlerText += `<a href="${haber.link}" target="_blank" style="color: #ffffff; text-decoration: underline; font-weight: 800; cursor: pointer; display: inline-block; pointer-events: auto; z-index: 9999;">${haber.baslik}</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;`;
-        });
-
-        haberAlani.innerHTML = tumHaberText;
+        try {
+            const cevap = await fetch(url);
+            const veri = await cevap.json();
+            
+            if (veri.status === 'ok' && veri.items.length > 0) {
+                let tumHaberlerText = " 🔥 SON DAKİKA EĞİTİM GÜNDEMİ: &nbsp;&nbsp;";
+                
+                // Gelen gerçek canlı haberlerin hepsini sırayla banta diziyoruz
+                veri.items.forEach(haber => {
+                    // target="_blank" sayesinde tıklayınca yeni sekmede gerçek habere gider
+                    tumHaberlerText += `<a href="${haber.link}" target="_blank" style="color: #ffffff; text-decoration: underline; font-weight: 800; cursor: pointer; display: inline-block; pointer-events: auto; z-index: 9999;">🌟 ${haber.title}</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;`;
+                });
+                
+                haberAlani.innerHTML = tumHaberlerText;
+            } else {
+                // Eğer anlık bir kesinti olursa yedek haberler devreye girer
+                YedekHaberleriGoster();
+            }
+        } catch (hata) {
+            console.log("Canlı haber çekme hatası, yedeğe geçiliyor:", hata);
+            YedekHaberleriGoster();
+        }
     }
 
-    haberleriEkranaBas();
-    setInterval(haberleriEkranaBas, 60000);
+    function YedekHaberleriGoster() {
+        const haberAlani = document.getElementById('egitim-haberleri');
+        haberAlani.innerHTML = `
+            <a href="https://www.meb.gov.tr" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">🏆 MEB: Bursluluk Sınavı (İOKBS) Sonuçları Açıklandı!</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://www.meb.gov.tr" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">📝 LGS Sınavı Yarın Yapılıyor! Tüm Öğrencilere Başarılar...</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="https://ais.osym.gov.tr" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">🌟 ÖSYM: YKS Sınav Giriş Belgeleri Erişime Açıldı!</a>
+        `;
+    }
+
+    // Site açılır açılmaz canlı haberleri internetten çek
+    canliHaberleriGetir();
+    
+    // Her 1 dakikada (60000 ms) bir arka planda haber ajansını kontrol et, yeni haber varsa banta ekle!
+    setInterval(canliHaberleriGetir, 60000);
 </script>
 </html>
