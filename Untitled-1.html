@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>dersimizturkce.com.tr | Türkçe Dersi Kaynak Portalı</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 1. SOL MENÜ (SIDEBAR) - GÖRSELDEKİ DÜZEN */
+        .sidebar {
+            width: 260px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 100;
+        }
+
+        .logo-area {
+            text-align: center;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
+
+        .logo-area h1 {
+            font-size: 22px;
+            color: #d32f2f;
+            font-weight: 800;
+        }
+        .logo-area span {
+            font-size: 11px;
+            color: #777;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+            font-size: 15px;
+            border-radius: 8px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .menu-item:hover {
+            background-color: #f5f5f5;
+        }
+
+        /* Sınıf Renkleri */
+        .m-5 { color: #9c27b0; }
+        .m-6 { color: #4caf50; }
+        .m-7 { color: #03a9f4; }
+        .m-8 { color: #ff9800; }
+
+        .menu-sep {
+            height: 1px;
+            background: #eee;
+            margin: 10px 0;
+        }
+
+        /* 2. ANA İÇERİK ALANI (MAIN CONTENT) */
+        .main-content {
+            margin-left: 260px;
+            flex: 1;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* Üst Arama Barı */
+        .top-bar {
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            display: flex;
+            align-items: center;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            background-color: #fafafa;
+        }
+
+        .search-input:focus {
+            border-color: #d32f2f;
+            background-color: #fff;
+        }
+
+        /* Büyük Reklam/Duyuru Bannerı */
+        .banner-wrapper {
+            display: flex;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .main-banner {
+            flex: 2;
+            background: linear-gradient(135deg, #3182ce, #2b6cb0);
+            border-radius: 15px;
+            padding: 40px;
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 250px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        .main-banner h2 { font-size: 28px; margin-bottom: 10px; }
+        .main-banner p { font-size: 16px; opacity: 0.9; margin-bottom: 20px; }
+        .banner-btn { background: white; color: #3182ce; padding: 10px 25px; border-radius: 25px; text-decoration: none; font-weight: bold; font-size: 14px; transition: 0.3s; }
+        .banner-btn:hover { transform: scale(1.05); }
+
+        .side-banner {
+            flex: 1;
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        /* Renkli Kısayol Kutuları (Grid) */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 15px;
+        }
+
+        .grid-box {
+            border-radius: 12px;
+            padding: 20px 10px;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+        }
+
+        .grid-box:hover { transform: translateY(-4px); box-shadow: 0 6px 12px rgba(0,0,0,0.1); }
+        .grid-box span { display: block; font-size: 11px; font-weight: normal; opacity: 0.9; }
+
+        /* Kutu Renkleri */
+        .bg-purple { background-color: #9c27b0; }
+        .bg-green  { background-color: #4caf50; }
+        .bg-red    { background-color: #e53935; }
+        .bg-blue   { background-color: #1e88e5; }
+        .bg-cyan   { background-color: #00acc1; }
+        .bg-orange { background-color: #fb8c00; }
+        .bg-pink   { background-color: #d81b60; }
+
+        /* GÜVENİLİR HESAPLAMA MOTORU KART STİLLERİ */
+        .calculation-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #e0e0e0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .countdown-container { background: #eef2f7; padding: 15px; border-radius: 10px; margin-bottom: 25px; border: 1px solid #dce4ec; }
+        .countdown-title { font-size: 14px; font-weight: bold; color: #4a5568; margin-bottom: 8px; }
+        .countdown { display: flex; justify-content: center; gap: 15px; }
+        .time-box { background: #3182ce; color: white; padding: 8px 12px; border-radius: 6px; font-weight: bold; min-width: 50px; }
+        .time-box span { display: block; font-size: 10px; font-weight: normal; text-transform: uppercase; margin-top: 2px; color: #ebf8ff; }
+
+        .ders-row { display: flex; align-items: center; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #eee; }
+        .ders-header { font-weight: bold; background: #3182ce; color: white; padding: 10px; border-radius: 5px 5px 0 0; display: flex; justify-content: space-between; }
+        .ders-ad { width: 35%; text-align: left; font-weight: bold; color: #444; }
+        .ders-header .lbl { width: 15%; text-align: center; font-weight: bold; }
+        .inputs-group { width: 65%; display: flex; justify-content: space-between; gap: 10px; }
+        .input-box { width: 22%; display: flex; flex-direction: column; align-items: center; }
+        
+        input { width: 100%; padding: 6px; border: 1px solid #ccc; border-radius: 5px; text-align: center; font-size: 14px; }
+        input:focus { border-color: #3182ce; outline: none; }
+        input[readonly] { background-color: #edf2f7; color: #4a5568; font-weight: bold; border-color: #cbd5e0; }
+        .net-gosterge { width: 22%; font-weight: bold; color: #2b6cb0; text-align: center; line-height: 32px;}
+
+        .toplam-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; background: #e2e8f0; font-weight: bold; border-radius: 0 0 5px 5px; margin-bottom: 20px; }
+        
+        .btn-hesapla { width: 100%; padding: 14px; background: #28a745; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 15px; }
+        .btn-hesapla:hover { background: #218838; }
+        .result { margin-top: 25px; padding: 15px; background: #e9f7ef; border-left: 5px solid #28a745; border-radius: 5px; text-align: left; line-height: 1.6; }
+
+        footer { text-align: center; padding: 20px; color: #aaa; font-size: 13px; margin-top: 20px; border-top: 1px solid #eee; }
+
+        /* MOBİL UYUMLULUK */
+        @media (max-width: 900px) {
+            body { flex-direction: column; }
+            .sidebar { width: 100%; height: auto; position: relative; border-right: none; border-bottom: 1px solid #e0e0e0; }
+            .main-content { margin-left: 0; padding: 15px; }
+            .banner-wrapper { flex-direction: column; }
+            .ders-ad { font-size: 12px; }
+            .ders-header { font-size: 12px; }
+        }
+        /* Canlı Haber Bandı Tasarımı */
+.haber-bandi {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #1e293b; /* Koyu modern lacivert */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    z-index: 9999;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+    font-family: sans-serif;
+    overflow: hidden;
+}
+
+.haber-baslik {
+    background: #ef4444; /* Canlı kırmızı */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    font-weight: bold;
+    font-size: 13px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    position: relative;
+    z-index: 2;
+}
+
+.haber-akis-alani {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.haber-metni {
+    display: flex;
+    white-space: nowrap;
+    padding-left: 100%;
+    animation: haberAkisi 25s linear infinite; /* Akış hızı */
+}
+
+.haber-metni span {
+    padding-right: 50px;
+    font-size: 14px;
+}
+
+/* Sağdan Sola Akma Animasyonu */
+@keyframes haberAkisi {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-100%, 0, 0); }
+}
+
+/* Haber bandı alttaki içerikleri kapatmasın diye ana sayfaya boşluk bırakalım */
+body {
+    padding-bottom: 50px;
+}
+    </style>
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="logo-area">
+            <h1>✍️ dersimiztürkçe</h1>
+            <span>Türkçe Dersi Kaynak Portalı</span>
+        </div>
+        
+        <a class="menu-item m-5">❯ 5. Sınıflar</a>
+        <a class="menu-item m-6">❯ 6. Sınıflar</a>
+        <a class="menu-item m-7">❯ 7. Sınıflar</a>
+        <a class="menu-item m-8">❯ 8. Sınıflar</a>
+        
+        <div class="menu-sep"></div>
+        
+        <a class="menu-item" style="color: #333;">📝 LGS Hazırlık</a>
+        <a class="menu-item" style="color: #333;">🎓 Bursluluk Sınavı</a>
+        <a href="#hesaplama-alani" class="menu-item" style="color: #d32f2f; font-weight: bold;">🧮 LGS Puan Hesapla</a>
+        
+        <div class="menu-sep"></div>
+        
+        <a href="https://www.instagram.com/turkce.ogrtmenim" target="_blank" class="menu-item" style="color: #e1306c;">📸 Instagram</a>
+        <a href="https://www.youtube.com/@turkce.ogrtmenim" target="_blank" class="menu-item" style="color: #ff0000;">📺 YouTube Kanalı</a>
+    </div>
+
+    <div class="main-content">
+        
+        <div class="top-bar">
+            <input type="text" class="search-input" placeholder="Sitede doküman, test veya konu anlatımı ara...">
+        </div>
+
+        <div class="banner-wrapper">
+            <div class="main-banner">
+                <h2>@turkce.ogrtmenim ile LGS 2027</h2>
+                <p>5, 6, 7 ve 8. Sınıf Müfredatına Uygun İndirilebilir PDF Kaynaklar ve Canlı Soru Çözümleri</p>
+                <a href="https://www.youtube.com/@turkce.ogrtmenim" target="_blank" class="banner-btn">Hemen İzle & Abone Ol</a>
+            </div>
+            <div class="side-banner">
+                <h4 style="color:#333; margin-bottom: 10px;">📚 Öne Çıkan Kitap</h4>
+                <div style="width: 100px; height: 130px; background: #eee; margin: 10px auto; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #aaa; border-radius: 5px;">Kapak Görseli</div>
+                <a href="#" style="font-size: 12px; color:#1e88e5; font-weight: bold; text-decoration: none;">İncele ➔</a>
+            </div>
+        </div>
+
+        <div class="grid-container">
+            <a href="#" class="grid-box bg-purple"><div>Ders Sunuları</div><span>Slaytlar</span></a>
+            <a href="#" class="grid-box bg-green"><div>Konu Anlatımı</div><span>Özet Notlar</span></a>
+            <a href="#" class="grid-box bg-red"><div>PDF Etkinlik</div><span>Çalışma Kağıdı</span></a>
+            <a href="#" class="grid-box bg-blue"><div>PDF Testler</div><span>Yaprak Testler</span></a>
+            <a href="#" class="grid-box bg-cyan"><div>İnteraktif</div><span>Dijital Oyunlar</span></a>
+            <a href="#" class="grid-box bg-orange"><div>Online Test</div><span>Kendini Dene</span></a>
+            <a href="#" class="grid-box bg-pink"><div>Yazılılar</div><span>Yazılı Provaları</span></a>
+        </div>
+
+        <div class="calculation-card" id="hesaplama-alani">
+            <h2 style="color: #333; margin-bottom: 5px;">🎯 LGS Puan Hesaplama ve Sayaç v4.1</h2>
+            <p style="color: #777; font-size: 14px; margin-bottom: 20px;">Usta & Çırak Yazılım - Hatalar Giderildi, Kararlı Sürüm</p>
+            
+            <div class="countdown-container">
+                <div class="countdown-title">⏳ LGS Sınavına Kalan Süre:</div>
+                <div class="countdown" id="timer">
+                    <div class="time-box" id="gun">00<span>Gün</span></div>
+                    <div class="time-box" id="saat">00<span>Saat</span></div>
+                    <div class="time-box" id="dakika">00<span>Dak</span></div>
+                    <div class="time-box" id="saniye">00<span>San</span></div>
+                </div>
+            </div>
+            
+            <div class="ders-header">
+                <span style="width: 35%; text-align: left;">Ders Adı</span>
+                <span class="lbl">Doğru</span>
+                <span class="lbl">Yanlış</span>
+                <span class="lbl">Boş</span>
+                <span class="lbl">Net</span>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">Türkçe (20)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="t_d" oninput="otomatikHesapla('t', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="t_y" oninput="otomatikHesapla('t', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="t_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="t_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">Matematik (20)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="m_d" oninput="otomatikHesapla('m', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="m_y" oninput="otomatikHesapla('m', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="m_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="m_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">Fen Bilimleri (20)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="f_d" oninput="otomatikHesapla('f', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="f_y" oninput="otomatikHesapla('f', 20)" value="0" min="0" max="20"></div>
+                    <div class="input-box"><input type="number" id="f_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="f_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">İnkılap Tar. (10)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="i_d" oninput="otomatikHesapla('i', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="i_y" oninput="otomatikHesapla('i', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="i_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="i_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">Din Kültürü (10)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="d_d" oninput="otomatikHesapla('d', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="d_y" oninput="otomatikHesapla('d', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="d_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="d_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="ders-row">
+                <div class="ders-ad">İngilizce (10)</div>
+                <div class="inputs-group">
+                    <div class="input-box"><input type="number" id="ing_d" oninput="otomatikHesapla('ing', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="ing_y" oninput="otomatikHesapla('ing', 10)" value="0" min="0" max="10"></div>
+                    <div class="input-box"><input type="number" id="ing_b" value="0" readonly></div>
+                    <div class="net-gosterge" id="ing_net">0.00</div>
+                </div>
+            </div>
+
+            <div class="toplam-row">
+                <span style="width: 35%; text-align: left; padding-left: 10px;">Genel Toplam:</span>
+                <span style="width: 15%; text-align: center;" id="toplam_dogru">0</span>
+                <span style="width: 15%; text-align: center;" id="toplam_yanlis">0</span>
+                <span style="width: 15%; text-align: center;" id="toplam_bos">0</span>
+                <span style="width: 15%; text-align: center; color: #2b6cb0;" id="toplam_net">0.00</span>
+            </div>
+
+            <button class="btn-hesapla" onclick="puanHesapla()">Hesapla ve Detayları Gör 🚀</button>
+            <div id="sonuc" style="display:none;"></div>
+        </div>
+
+        <footer>
+            &copy; 2026 dersimizturkce.com.tr - @turkce.ogrtmenim Portalı. Tüm Hakları Saklıdır.
+        </footer>
+    </div>
+
+    <script>
+    const lgsTarihi = new Date("June 6, 2027 09:30:00").getTime();
+    setInterval(function() {
+        const simdi = new Date().getTime();
+        const fark = lgsTarihi - simdi;
+        const gun = Math.floor(fark / (1000 * 60 * 60 * 24));
+        const saat = Math.floor((fark % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const dakika = Math.floor((fark % (1000 * 60 * 60)) / (1000 * 60));
+        const saniye = Math.floor((fark % (1000 * 60)) / 1000);
+        document.getElementById("gun").innerHTML = gun + "<span>Gün</span>";
+        document.getElementById("saat").innerHTML = saat + "<span>Saat</span>";
+        document.getElementById("dakika").innerHTML = dakika + "<span>Dak</span>";
+        document.getElementById("saniye").innerHTML = saniye + "<span>San</span>";
+    }, 1000);
+
+    function otomatikHesapla(dersKod, soruLimiti) {
+        let d = parseInt(document.getElementById(dersKod + "_d").value) || 0;
+        let y = parseInt(document.getElementById(dersKod + "_y").value) || 0;
+        
+        if (d + y > soruLimiti) {
+            alert("Doğru ve yanlış sayılarının toplamı dersin soru sınırını (" + soruLimiti + ") aşamaz!");
+            document.getElementById(dersKod + "_d").value = 0;
+            document.getElementById(dersKod + "_y").value = 0;
+            d = 0; y = 0;
+        }
+
+        let b = soruLimiti - (d + y);
+        document.getElementById(dersKod + "_b").value = b;
+
+        let net = d - (y / 3);
+        document.getElementById(dersKod + "_net").innerText = net.toFixed(2);
+
+        genelToplamGuncelle();
+    }
+
+    function genelToplamGuncelle() {
+        let kodlar = ["t", "m", "f", "i", "d", "ing"];
+        let tD = 0, tY = 0, tB = 0, tNet = 0;
+
+        kodlar.forEach(function(k) {
+            tD += parseInt(document.getElementById(k + "_d").value) || 0;
+            tY += parseInt(document.getElementById(k + "_y").value) || 0;
+            tB += parseInt(document.getElementById(k + "_b").value) || 0;
+            tNet += parseFloat(document.getElementById(k + "_net").innerText) || 0;
+        });
+
+        document.getElementById("toplam_dogru").innerText = tD;
+        document.getElementById("toplam_yanlis").innerText = tY;
+        document.getElementById("toplam_bos").innerText = tB;
+        document.getElementById("toplam_net").innerText = tNet.toFixed(2);
+    }
+
+    function puanHesapla() {
+      let sonucKutusu = document.getElementById("sonuc");
+      
+      let td = parseInt(document.getElementById("t_d").value) || 0;
+      let ty = parseInt(document.getElementById("t_y").value) || 0;
+      let md = parseInt(document.getElementById("m_d").value) || 0;
+      let my = parseInt(document.getElementById("m_y").value) || 0;
+      let fd = parseInt(document.getElementById("f_d").value) || 0;
+      let fy = parseInt(document.getElementById("f_y").value) || 0;
+      let id = parseInt(document.getElementById("i_d").value) || 0;
+      let iy = parseInt(document.getElementById("i_y").value) || 0;
+      let dd = parseInt(document.getElementById("d_d").value) || 0;
+      let dy = parseInt(document.getElementById("d_y").value) || 0;
+      let ingd = parseInt(document.getElementById("ing_d").value) || 0;
+      let ingy = parseInt(document.getElementById("ing_y").value) || 0;
+
+      let t_net = td - (ty / 3);
+      let m_net = md - (my / 3);
+      let f_net = fd - (fy / 3);
+      let i_net = id - (iy / 3);
+      let d_net = dd - (dy / 3);
+      let ing_net = ingd - (ingy / 3);
+      
+      let toplam_net = t_net + m_net + f_net + i_net + d_net + ing_net;
+
+      // Senin kodundaki orijinal kalibre katsayılar
+      let lgs_puani = 191.2 + (t_net * 4.25) + (m_net * 4.95) + (f_net * 4.15) + 
+                              (i_net * 1.68) + (d_net * 1.55) + (ing_net * 1.42);
+      
+      if (td === 20 && md === 20 && fd === 20 && id === 10 && dd === 10 && ingd === 10 && 
+          ty === 0 && my === 0 && fy === 0 && iy === 0 && dy === 0 && ingy === 0) {
+          lgs_puani = 500;
+      }
+      
+      if (lgs_puani > 500) lgs_puani = 500;
+      if (lgs_puani < 100) lgs_puani = 100;
+
+      let mesaj = "";
+      if (lgs_puani >= 500) {
+        mesaj = "👑 Efsane! Tam puan aldın! Galatasaray Lisesi kapılarını senin için açıyor!";
+      } else if (lgs_puani >= 480) {
+        mesaj = "🏆 Muazzam! İstanbul Erkek veya Ankara Fen gibi zirvedeki okullara göz kırpıyorsun!";
+      } else if (lgs_puani >= 450) {
+        mesaj = "⭐ Harika! Nitelikli Fen ve köklü Anadolu Liseleri için çok güçlü bir puandasın.";
+      } else if (lgs_puani >= 400) {
+        mesaj = "👏 Çok Güzel! Birçok sınavla alan Anadolu lisesine girebilirsin.";
+      } else {
+        mesaj = "📚 Unutma, bu bir simülasyon. Gerçek sınavda çok daha iyisini yapabilirsin!";
+      }
+
+      sonucKutusu.style.display = "block";
+      sonucKutusu.className = "result";
+      sonucKutusu.innerHTML = `
+        <strong>📈 Toplam Netiniz:</strong> ${toplam_net.toFixed(2)}<br>
+        <strong>🎯 Tahmini LGS Puanınız:</strong> ${lgs_puani.toFixed(4)}<br><br>
+        <strong>Lise Durumu:</strong><br> ${mesaj}
+      `;
+    }
+    </script>
+</body>
+<!-- CANLI EĞİTİM HABERLERİ ŞERİDİ -->
+<div class="haber-bandi">
+    <div class="haber-baslik">CANLI HABER</div>
+    <div class="haber-akis-alani">
+        <div class="haber-metni">
+            <span>🔥 MEB: LGS Sonuçları Açıklandı! Puanınızı hemen yukarıdaki motorumuzdan hesaplayabilirsiniz...</span>
+            <span>📚 5. Sınıf Türkçe Çalışma Kağıtları Güncellendi, İndirmek İçin Menüyü Kullanın...</span>
+            <span>📢 Öğretmen Atama Takvimi Detayları Belli Oldu...</span>
+            <span>📝 Okullarda Son Hafta Etkinlik Programı Başladı...</span>
+        </div>
+    </div>
+</div>
+</html>
