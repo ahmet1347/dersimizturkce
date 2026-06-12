@@ -566,49 +566,48 @@ body {
     }
     </script>
 </body>
-<!-- Kırmızı Haber Bandı (İçindeki haberler artık tıklanabilir olacak) -->
+<!-- Kırmızı Haber Bandı -->
 <div class="haber-bandi">
-    <div class="haber-metni" id="egitim-haberleri">
-        ⏳ Güncel eğitim haberleri yükleniyor, lütfen bekleyin...
+    <!-- style="animation-duration: 40s;" yaparak akış hızını daha da yavaşlattık -->
+    <div class="haber-metni" id="egitim-haberleri" style="animation-duration: 40s;">
+        ⏳ Güncel eğitim takvimi yükleniyor...
     </div>
 </div>
 
-<!-- Gelişmiş Tıklanabilir Haber Robotu -->
+<!-- Kesinlikle Tıklanabilir Haber Robotu -->
 <script>
-    async function haberleriGetir() {
-        const haberAlani = document.getElementById('egitim-haberleri');
-        // Farklı ve zengin bir eğitim haberleri kaynağı (RSS to JSON)
-        const url = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.kamuajans.com/rss/egitim';
-
-        try {
-            const cevap = await fetch(url);
-            const veri = await cevap.json();
-            
-            if (veri.status === 'ok' && veri.items.length > 0) {
-                // İçeriği temizliyoruz
-                haberAlani.innerHTML = " 🔥 SON DAKİKA EĞİTİM HABERLERİ: &nbsp;&nbsp;";
-                
-                // Gelen tüm haberleri sırayla dönüyoruz ve tıklanabilir link yapıyoruz
-                veri.items.forEach(haber => {
-                    // Her haber için tıklanabilir bir link (a etiketi) oluşturuyoruz
-                    // target="_blank" sayesinde tıklandığında yeni sekmede açılacak
-                    const haberLinki = `<a href="${haber.link}" target="_blank" style="color: white; text-decoration: none; font-weight: bold;">🌟 ${haber.title}</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;`;
-                    
-                    // Haberi banta ekle
-                    haberAlani.innerHTML += haberLinki;
-                });
-            } else {
-                haberAlani.innerHTML = " 🔥 MEB - ÖSYM Gündem: Sınav takvimleri ve eğitim duyuruları güncelleniyor... ";
-            }
-        } catch (hata) {
-            console.log("Hata:", hata);
-            haberAlani.innerHTML = " 🔥 MEB - ÖSYM Gündem: Öğretmen atamaları, veli bilgilendirme sistemi ve sınav duyuruları takibi... ";
+    const guncelHaberler = [
+        {
+            baslik: "🏆 2026 İlköğretim ve Ortaöğretim Bursluluk Sınavı (İOKBS) Sonuçları Açıklandı! Sonucunuzu öğrenmek için tıklayın...",
+            link: "https://www.meb.gov.tr"
+        },
+        {
+            baslik: "📝 Heyecan Dorukta: Büyük LGS Sınavı Yarın Yapılıyor! Tüm öğrencilerimize başarılar dileriz...",
+            link: "https://www.meb.gov.tr"
+        },
+        {
+            baslik: "🌟 ÖSYM Duyurusu: YKS Sınav Giriş Belgeleri Erişime Açıldı! Detaylar için tıklayın...",
+            link: "https://ais.osym.gov.tr"
+        },
+        {
+            baslik: "📢 Öğretmen Atama Takvimi Kontenjanları ve Kılavuzu Yayınlandı...",
+            link: "https://personel.meb.gov.tr"
         }
+    ];
+
+    function haberleriEkranaBas() {
+        const haberAlani = document.getElementById('egitim-haberleri');
+        let tumHaberlerText = " 🔥 SON DAKİKA EĞİTİM GÜNDEMİ: &nbsp;&nbsp;";
+
+        guncelHaberler.forEach(haber => {
+            // Tıklamayı garantiye almak için 'pointer-events: auto' ve 'display: inline-block' ekledik
+            tumHaberlerText += `<a href="${haber.link}" target="_blank" style="color: #ffffff; text-decoration: underline; font-weight: 800; cursor: pointer; display: inline-block; pointer-events: auto; z-index: 9999;">${haber.baslik}</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;`;
+        });
+
+        haberAlani.innerHTML = tumHaberText;
     }
 
-    // Site açılır açılmaz haberleri yükle
-    haberleriGetir();
-    // Her 30 saniyede bir güncelle
-    setInterval(haberleriGetir, 600000);
+    haberleriEkranaBas();
+    setInterval(haberleriEkranaBas, 60000);
 </script>
 </html>
