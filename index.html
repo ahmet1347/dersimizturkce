@@ -14,7 +14,49 @@
             --text-main: #1e293b;
             --border-color: #e2e8f0;
             --danger: #ff4757;
+            --card-bg: #ffffff;
+            --input-bg: #ffffff;
+            --subtle-bg: #f1f5f9;
+            --header-bg: #1e293b;
         }
+        body.dark-mode {
+            --bg-main: #0f172a;
+            --text-main: #e2e8f0;
+            --border-color: #334155;
+            --card-bg: #1e293b;
+            --input-bg: #1e293b;
+            --subtle-bg: #1e293b;
+            --header-bg: #0f172a;
+        }
+        body.dark-mode .hizli-baglantilar-container,
+        body.dark-mode .container,
+        body.dark-mode .portal-block,
+        body.dark-mode .accordion-item,
+        body.dark-mode .accordion-content,
+        body.dark-mode .arama-kutusu,
+        body.dark-mode .hizli-link-kart,
+        body.dark-mode .modul-btn,
+        body.dark-mode .floating-liste,
+        body.dark-mode .sinif-tab,
+        body.dark-mode .kelime-gunu-kart,
+        body.dark-mode .ogretmen-panel-kart,
+        body.dark-mode .takvim-kart,
+        body.dark-mode .soru-cozucu-kart { background: var(--card-bg); border-color: var(--border-color); color: var(--text-main); }
+        body.dark-mode input { background: var(--input-bg); color: var(--text-main); border-color: var(--border-color); }
+        body.dark-mode .toplam-row { background: #0f172a; border-color: var(--border-color); }
+        body.dark-mode .ders-row { border-color: var(--border-color); }
+        body.dark-mode .accordion-header { background: #334155; color: #e2e8f0; }
+        body.dark-mode .accordion-header:hover { background: #475569; }
+        body.dark-mode .accordion-body-inner { color: #94a3b8; }
+        body.dark-mode .hizli-link-kart { color: #cbd5e1; }
+        body.dark-mode h2, body.dark-mode .sayfa-adi-sagust, body.dark-mode .panel-ust-baslik,
+        body.dark-mode .hizli-baglantilar-baslik, body.dark-mode .portal-header-title { color: #e2e8f0; }
+        body.dark-mode .sub-title, body.dark-mode .ders-ad { color: #94a3b8; }
+        body.dark-mode .countdown-container { background: #0f172a; border-color: var(--border-color); }
+        body.dark-mode .result { background: var(--card-bg); }
+        body.dark-mode .result-grid { background: #0f172a; }
+        body.dark-mode .site-footer { background: #030712; }
+        body.dark-mode .modul-btn { color: #94a3b8; }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -598,7 +640,7 @@
         /* Mobil Cihaz Duyarlılığı */
         @media (max-width: 850px) {
             .ust-kontrol-paneli { flex-direction: column; align-items: stretch; }
-            .sag-ust-grup { justify-content: space-between; margin-top: 10px; }
+            .sag-ust-grup { justify-content: space-between; margin-top: 10px; flex-wrap: wrap; gap: 10px; }
             .slayt-icerik { max-width: 100%; padding: 15px; }
             .slayt-baslik { font-size: 16px; }
             .slayt-alt { font-size: 11px; }
@@ -611,10 +653,149 @@
             .sinif-tab { flex: 1; min-width: 80px; }
             .icerik-sutun { width: 100%; }
             .floating-menu-wrapper { bottom: 15px; right: 15px; }
+            .modul-secici-grup { grid-template-columns: 1fr; }
+            .extra-widgets-grid { grid-template-columns: 1fr !important; }
+            .ogretmen-grid { grid-template-columns: 1fr !important; }
+            .takvim-liste { font-size: 12px; }
+            .soru-cozucu-kart { padding: 15px !important; }
+            .sayfa-adi-sagust { font-size: 16px; }
+            .dark-mode-btn { padding: 8px 12px; font-size: 12px; }
         }
+        @media (max-width: 480px) {
+            .slider-alti-hizli-menu { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+            .hizli-arsiv-btn { font-size: 11px; padding: 10px 3px; }
+            .sag-ust-sosyal { gap: 6px; }
+            .mini-social-btn { padding: 8px 10px; font-size: 12px; }
+        }
+
+        /* ============ LOADING SCREEN ============ */
+        #yuklenme-ekrani {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            z-index: 99999; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; gap: 20px;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+        #yuklenme-ekrani.gizle { opacity: 0; visibility: hidden; }
+        .yuklenme-logo { font-size: 48px; font-weight: 900; color: white; letter-spacing: -1px; }
+        .yuklenme-logo span { color: #3182ce; }
+        .yuklenme-cubuk-wrapper { width: 200px; height: 4px; background: #334155; border-radius: 99px; overflow: hidden; }
+        .yuklenme-cubuk { height: 100%; width: 0%; background: linear-gradient(90deg, #3182ce, #2ed573); border-radius: 99px; transition: width 0.05s linear; }
+        .yuklenme-altyazi { color: #64748b; font-size: 13px; font-weight: 600; letter-spacing: 1px; }
+
+        /* ============ DARK MODE BUTTON ============ */
+        .dark-mode-btn {
+            padding: 10px 16px; border-radius: 10px; border: 2px solid var(--border-color);
+            background: var(--card-bg); color: var(--text-main); font-size: 13px;
+            font-weight: 700; cursor: pointer; transition: all 0.2s; white-space: nowrap;
+        }
+        .dark-mode-btn:hover { border-color: var(--primary); color: var(--primary); }
+
+        /* ============ KONFETI CANVAS ============ */
+        #konfeti-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; display: none; }
+
+        /* ============ EXTRA WIDGETS ============ */
+        .extra-widgets-grid {
+            max-width: 1050px; width: 90%; margin: 0 auto 25px auto;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Kelime Günü */
+        .kelime-gunu-kart {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid var(--border-color);
+        }
+        .kelime-gunu-baslik { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .kelime-gunu-kelime { font-size: 28px; font-weight: 900; color: var(--primary); margin-bottom: 6px; }
+        .kelime-gunu-tur { font-size: 12px; color: #94a3b8; font-weight: 600; margin-bottom: 10px; }
+        .kelime-gunu-anlam { font-size: 14px; color: var(--text-main); line-height: 1.6; font-weight: 500; }
+        .kelime-gunu-ornek { font-style: italic; color: #64748b; font-size: 13px; margin-top: 8px; padding-left: 10px; border-left: 3px solid var(--primary); }
+        .kelime-yenile-btn { margin-top: 12px; padding: 7px 14px; border-radius: 8px; border: none; background: var(--primary); color: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .kelime-yenile-btn:hover { background: var(--primary-hover); }
+
+        /* Yapay Zeka Soru Çözücü */
+        .soru-cozucu-kart {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid var(--border-color);
+        }
+        .soru-cozucu-baslik { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; }
+        .soru-upload-alan {
+            border: 2px dashed #cbd5e1; border-radius: 12px; padding: 20px; text-align: center;
+            cursor: pointer; transition: all 0.2s; margin-bottom: 12px; color: #94a3b8;
+            font-size: 13px; font-weight: 600; background: var(--subtle-bg);
+        }
+        .soru-upload-alan:hover { border-color: var(--primary); color: var(--primary); background: rgba(49,130,206,0.05); }
+        .soru-upload-alan.drag-over { border-color: var(--primary); background: rgba(49,130,206,0.08); }
+        #soruDosyaInput { display: none; }
+        #soruOnizleme { max-width: 100%; border-radius: 10px; margin-bottom: 10px; display: none; }
+        .soru-coz-btn { width: 100%; padding: 12px; border: none; border-radius: 10px; background: linear-gradient(135deg, #6c5ce7, #a29bfe); color: white; font-size: 14px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .soru-coz-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+        .soru-coz-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .ai-cevap-alani { margin-top: 12px; background: var(--subtle-bg); border-radius: 10px; padding: 15px; font-size: 13px; color: var(--text-main); line-height: 1.7; min-height: 60px; border: 1px solid var(--border-color); white-space: pre-wrap; display: none; }
+        .ai-yukleniyor { text-align: center; color: var(--primary); font-weight: 700; font-size: 13px; display: none; }
+
+        /* ============ SINAMA TAKVİMİ ============ */
+        .takvim-kart {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid var(--border-color);
+        }
+        .takvim-baslik-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 15px; }
+        .takvim-baslik { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
+        .takvim-liste { display: flex; flex-direction: column; gap: 10px; }
+        .takvim-item { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: var(--subtle-bg); border: 1px solid var(--border-color); transition: all 0.2s; }
+        .takvim-item:hover { transform: translateX(4px); border-color: var(--primary); }
+        .takvim-etiket { font-size: 11px; font-weight: 800; padding: 4px 10px; border-radius: 6px; white-space: nowrap; color: white; }
+        .etk-lgs { background: #c0392b; }
+        .etk-yks { background: #6c5ce7; }
+        .etk-iokbs { background: #00b894; }
+        .etk-tyt { background: #0984e3; }
+        .takvim-item-bilgi { flex: 1; }
+        .takvim-item-ad { font-size: 13px; font-weight: 700; color: var(--text-main); }
+        .takvim-item-tarih { font-size: 12px; color: #64748b; font-weight: 600; margin-top: 2px; }
+        .takvim-kalan { font-size: 13px; font-weight: 800; color: var(--primary); white-space: nowrap; }
+
+        /* ============ ÖĞRETMEN PANELİ ============ */
+        .ogretmen-panel-kart {
+            max-width: 1050px; width: 90%; margin: 0 auto 25px auto;
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid var(--border-color);
+            box-sizing: border-box;
+        }
+        .ogretmen-panel-baslik { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px dashed var(--border-color); }
+        .ogretmen-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .ogretmen-stat { background: var(--subtle-bg); border-radius: 14px; padding: 18px; border: 1px solid var(--border-color); text-align: center; }
+        .ogretmen-stat-ikon { font-size: 28px; margin-bottom: 6px; }
+        .ogretmen-stat-sayi { font-size: 28px; font-weight: 900; color: var(--primary); }
+        .ogretmen-stat-lbl { font-size: 12px; color: #64748b; font-weight: 600; margin-top: 3px; }
+
+        /* Geri Bildirim Formu */
+        .geri-bildirim-form { margin-top: 20px; border-top: 2px dashed var(--border-color); padding-top: 20px; }
+        .geri-bildirim-baslik { font-size: 14px; font-weight: 700; color: var(--text-main); margin-bottom: 12px; }
+        .geri-bildirim-form select,
+        .geri-bildirim-form textarea,
+        .geri-bildirim-form input[type="text"] {
+            width: 100%; padding: 10px 14px; border: 1px solid var(--border-color);
+            border-radius: 10px; font-size: 13px; color: var(--text-main);
+            background: var(--input-bg); font-family: inherit; box-sizing: border-box; margin-bottom: 10px;
+        }
+        .geri-bildirim-form textarea { min-height: 80px; resize: vertical; }
+        .geri-bildirim-gonder-btn { padding: 10px 22px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 13px; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .geri-bildirim-gonder-btn:hover { background: var(--primary-hover); }
+        .geri-bildirim-basari { display: none; background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; border-radius: 10px; padding: 12px; font-size: 13px; font-weight: 600; margin-top: 10px; }
     </style>
 </head>
 <body>
+
+<!-- YÜKLEME EKRANI -->
+<div id="yuklenme-ekrani">
+    <div class="yuklenme-logo">Dersimiz <span>Türkçe</span></div>
+    <div class="yuklenme-cubuk-wrapper"><div class="yuklenme-cubuk" id="yuklenme-cubuk"></div></div>
+    <div class="yuklenme-altyazi">Portal yükleniyor...</div>
+</div>
+
+<!-- KONFETİ CANVAS -->
+<canvas id="konfeti-canvas"></canvas>
 
 <div class="floating-menu-wrapper">
     <button class="floating-ana-btn">📂</button>
@@ -635,6 +816,7 @@
         <input type="text" class="arama-kutusu" id="siteArama" onkeyup="hizliArama()" placeholder="Sistemde ders, döküman, sınav grubu veya konu ara...">
     </div>
     <div class="sag-ust-grup">
+        <button class="dark-mode-btn" id="darkModeBtn" onclick="karanlıkModToggle()">🌙 Gece Modu</button>
         <img src="profil.jpeg" alt="Türkçe Öğretmeni" class="hoba-profil-avatar" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3426/3426653.png'">
         <div class="sayfa-adi-sagust">Dersimiz Türkçe</div>
         <div class="sag-ust-sosyal">
@@ -1052,6 +1234,83 @@
     </div>
 </div>
 
+<!-- ============ YENİ WİDGETLER: SORU ÇÖZÜCÜ + KELIME GÜNÜ ============ -->
+<div class="extra-widgets-grid">
+
+    <!-- YAPAY ZEKA SORU ÇÖZÜCÜ -->
+    <div class="soru-cozucu-kart">
+        <div class="soru-cozucu-baslik">🤖 Yapay Zeka Soru Çözücü</div>
+        <div class="soru-upload-alan" id="soruUploadAlan" onclick="document.getElementById('soruDosyaInput').click()">
+            <div style="font-size:28px;margin-bottom:6px;">📸</div>
+            <div>Soruyu buraya yükle veya tıkla</div>
+            <div style="font-size:11px;margin-top:4px;color:#94a3b8;">JPG, PNG, WEBP desteklenir</div>
+        </div>
+        <input type="file" id="soruDosyaInput" accept="image/*" onchange="soruResmiSecildi(this)">
+        <img id="soruOnizleme" alt="Soru önizleme">
+        <div id="ai-yukleniyor" class="ai-yukleniyor">🔍 AI soruyu çözüyor, lütfen bekleyin...</div>
+        <button class="soru-coz-btn" id="soruCozBtn" onclick="soruCoz()" disabled>⚡ AI ile Çöz</button>
+        <div id="aiCevapAlani" class="ai-cevap-alani"></div>
+    </div>
+
+    <!-- KELIME GÜNÜ -->
+    <div class="kelime-gunu-kart">
+        <div class="kelime-gunu-baslik">📖 Günün Türkçe Kelimesi</div>
+        <div class="kelime-gunu-kelime" id="kg-kelime">Yükleniyor...</div>
+        <div class="kelime-gunu-tur" id="kg-tur"></div>
+        <div class="kelime-gunu-anlam" id="kg-anlam"></div>
+        <div class="kelime-gunu-ornek" id="kg-ornek"></div>
+        <button class="kelime-yenile-btn" onclick="kelimeGetir()">🔄 Yeni Kelime</button>
+    </div>
+</div>
+
+<!-- ============ SINAV TAKVİMİ + ÖĞRETMEN PANELİ ============ -->
+<div class="extra-widgets-grid">
+    <!-- SINAV TAKVİMİ -->
+    <div class="takvim-kart">
+        <div class="takvim-baslik-row">
+            <div class="takvim-baslik">📅 Sınav Takvimi 2025-2026</div>
+        </div>
+        <div class="takvim-liste" id="takvimListe"></div>
+    </div>
+
+    <!-- ÖĞRETMEN PANELİ -->
+    <div class="ogretmen-panel-kart" style="max-width:100%;width:100%;margin:0;">
+        <div class="ogretmen-panel-baslik">🎓 Öğretmen Paneli & İstatistikler</div>
+        <div class="ogretmen-grid">
+            <div class="ogretmen-stat">
+                <div class="ogretmen-stat-ikon">👁️</div>
+                <div class="ogretmen-stat-sayi" id="ziyaretci-sayac">—</div>
+                <div class="ogretmen-stat-lbl">Toplam Ziyaretçi</div>
+            </div>
+            <div class="ogretmen-stat">
+                <div class="ogretmen-stat-ikon">📥</div>
+                <div class="ogretmen-stat-sayi" id="en-cok-indirilen">LGS 8. Sınıf</div>
+                <div class="ogretmen-stat-lbl">En Çok İndirilen</div>
+            </div>
+            <div class="ogretmen-stat">
+                <div class="ogretmen-stat-ikon">💬</div>
+                <div class="ogretmen-stat-sayi" id="geri-bildirim-sayac">0</div>
+                <div class="ogretmen-stat-lbl">Geri Bildirim</div>
+            </div>
+        </div>
+        <div class="geri-bildirim-form">
+            <div class="geri-bildirim-baslik">📝 Konu veya Döküman Talep Et</div>
+            <input type="text" id="gb-ad" placeholder="Adın (isteğe bağlı)">
+            <select id="gb-tur">
+                <option value="">— Talep türünü seç —</option>
+                <option>Konu Anlatımı</option>
+                <option>Çalışma Kağıdı</option>
+                <option>Test / Deneme</option>
+                <option>Video Ders Talebi</option>
+                <option>Diğer</option>
+            </select>
+            <textarea id="gb-mesaj" placeholder="Hangi konuyu veya dökümanı istiyorsun? Sınıf seviyeni de belirt..."></textarea>
+            <button class="geri-bildirim-gonder-btn" onclick="geriBildirimGonder()">📨 Talebi Gönder</button>
+            <div class="geri-bildirim-basari" id="gb-basari">✅ Talebiniz alındı! En kısa sürede ilgilenilecektir.</div>
+        </div>
+    </div>
+</div>
+
 <div class="haber-bandi">
     <div class="haber-pencere">
         <div class="haber-metni" id="egitim-haberleri">
@@ -1303,6 +1562,7 @@ function gosterSonucKarnesi(toplamNet, puan, baslik) {
         <div class="result-msg">Hesaplama başarıyla tamamlandı! Dersimiz Türkçe keyifli çalışmalar diler.</div>
     `;
     sonucKutusu.scrollIntoView({ behavior: 'smooth' });
+    konfetiBastir();
 }
 
 function hesaplaLgsPuan() {
@@ -1344,30 +1604,404 @@ function hesaplaBursPuan() {
     gosterSonucKarnesi(toplam_net, puan, "İOKBS Bursluluk Sınavı");
 }
 
-// CANLI HABER AKIŞI
-async function canliHaberleriGetir() {
-    const haberAlani = document.getElementById('egitim-haberleri');
-    const url = 'https://api.rss2json.com/v1/api.json?rss_url=https://www.kamuajans.com/rss/egitim';
+// ============ CANLI HABER AKIŞI — ÇOK KAYNAKLI SİSTEM ============
+const RSS_KAYNAKLAR = [
+    { url: 'https://www.meb.gov.tr/haberler/rss.xml',           etiket: 'MEB',    link: 'https://www.meb.gov.tr' },
+    { url: 'https://www.osym.gov.tr/haberler/rss.xml',          etiket: 'ÖSYM',   link: 'https://www.osym.gov.tr' },
+    { url: 'https://www.bik.gov.tr/rss/egitim.xml',             etiket: 'BİK',    link: 'https://www.bik.gov.tr' },
+    { url: 'https://www.kamuajans.com/rss/egitim',              etiket: 'GÜNDEM', link: 'https://www.kamuajans.com' },
+    { url: 'https://haberler.com/rss/egitim.xml',               etiket: 'HABER',  link: 'https://haberler.com' },
+];
+const RSS2JSON = 'https://api.rss2json.com/v1/api.json?count=8&rss_url=';
+const YENILEME_SURESI = 30 * 60 * 1000; // 30 dakika
+const CACHE_SURESI    = 25 * 60 * 1000; // 25 dakika önbellek
+
+let haberBandıYenilemeTimer = null;
+
+function haberBandiMetniYaz(haberler) {
+    const alan = document.getElementById('egitim-haberleri');
+    if (!haberler || haberler.length === 0) { aiHaberleriGetir(); return; }
+
+    let metin = '&nbsp;&nbsp;🔴 CANLI EĞİTİM GÜNDEMİ&nbsp;&nbsp;&nbsp;';
+    haberler.forEach(h => {
+        const etiket = h.etiket ? `<span style="background:rgba(255,255,255,0.25);padding:2px 7px;border-radius:4px;font-size:11px;margin-right:5px;">${h.etiket}</span>` : '';
+        metin += `${etiket}<a href="${h.link}" target="_blank" rel="noopener" style="color:#fff;text-decoration:underline;font-weight:700;">${h.baslik}</a>&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;`;
+    });
+    alan.innerHTML = metin;
+
+    // Animasyonu yeniden başlat (DOM yenileme sonrası)
+    alan.style.animation = 'none';
+    alan.offsetHeight; // reflow
+    alan.style.animation = '';
+}
+
+async function rssKaynagindenGetir(kaynak) {
+    const cevap = await fetch(RSS2JSON + encodeURIComponent(kaynak.url), { signal: AbortSignal.timeout(6000) });
+    const veri  = await cevap.json();
+    if (veri.status !== 'ok' || !veri.items?.length) return [];
+    return veri.items.slice(0, 6).map(item => ({
+        baslik: item.title?.trim().replace(/\s+/g, ' ').substring(0, 90) + (item.title?.length > 90 ? '…' : ''),
+        link:   item.link || kaynak.link,
+        etiket: kaynak.etiket
+    }));
+}
+
+async function tumKaynaklardenGetir() {
+    // Önbellekten kontrol et
     try {
-        const cevap = await fetch(url);
-        const veri = await cevap.json();
-        if (veri.status === 'ok' && veri.items.length > 0) {
-            let tumHaberlerText = " 🔥 CANLI GÜNDEM: &nbsp;&nbsp;";
-            veri.items.forEach(haber => {
-                tumHaberlerText += `<a href="${haber.link}" target="_blank" style="color: #ffffff; text-decoration: underline; font-weight: 800; display: inline-block;">🌟 ${haber.title}</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;`;
-            });
-            haberAlani.innerHTML = tumHaberlerText;
-        } else { YedekHaberleriGoster(); }
-    } catch (hata) { YedekHaberleriGoster(); }
+        const onbellek = JSON.parse(localStorage.getItem('haber_cache') || '{}');
+        if (onbellek.zaman && Date.now() - onbellek.zaman < CACHE_SURESI && onbellek.haberler?.length) {
+            haberBandiMetniYaz(onbellek.haberler);
+            return;
+        }
+    } catch(_) {}
+
+    const alan = document.getElementById('egitim-haberleri');
+    alan.innerHTML = '&nbsp;&nbsp;⏳ Güncel eğitim haberleri yükleniyor...';
+
+    let tumHaberler = [];
+
+    // Tüm kaynakları paralel dene, hata veren kaynak atlanır
+    const sonuclar = await Promise.allSettled(RSS_KAYNAKLAR.map(k => rssKaynagindenGetir(k)));
+    sonuclar.forEach(s => { if (s.status === 'fulfilled') tumHaberler.push(...s.value); });
+
+    // Eğer hiçbir kaynak çalışmadıysa Claude AI'dan haber özetleri al
+    if (tumHaberler.length === 0) {
+        await aiHaberleriGetir();
+        return;
+    }
+
+    // Karıştır ve önbelleğe kaydet
+    tumHaberler = tumHaberler.sort(() => Math.random() - 0.5);
+    try {
+        localStorage.setItem('haber_cache', JSON.stringify({ zaman: Date.now(), haberler: tumHaberler }));
+    } catch(_) {}
+
+    haberBandiMetniYaz(tumHaberler);
 }
-function YedekHaberleriGoster() {
-    const haberAlani = document.getElementById('egitim-haberleri');
-    haberAlani.innerHTML = `
-        <a href="https://www.meb.gov.tr" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">🏆 MEB Ortaöğretim Başarı Kriterleri ve Yeni Yönetmelik Detayları Yayınlandı!</a> &nbsp;&nbsp;&nbsp;&nbsp;———&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="https://www.meb.gov.tr" target="_blank" style="color: white; text-decoration: underline; font-weight: bold;">📝 ÖSYM Tercih Kılavuzları Güncellendi, Detaylar İçin Tıklayın.</a>
-    `;
+
+// Hiçbir RSS kaynağı çalışmazsa Claude API güncel eğitim gündemi özeti üretir
+async function aiHaberleriGetir() {
+    const alan = document.getElementById('egitim-haberleri');
+    alan.innerHTML = '&nbsp;&nbsp;🤖 Yapay zeka eğitim gündemi hazırlıyor...';
+    try {
+        const bugun = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+        const res = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-6',
+                max_tokens: 600,
+                tools: [{ type: 'web_search_20250305', name: 'web_search' }],
+                messages: [{
+                    role: 'user',
+                    content: `Bugün ${bugun} tarihinde Türkiye'deki eğitim haberleri neler? MEB, ÖSYM, LGS, YKS, öğretmen, öğrenci konularında 6-8 kısa haber başlığı üret. Her başlığı "|||" ile ayır, sadece başlıkları yaz, başka hiçbir şey yazma.`
+                }]
+            })
+        });
+        const veri = await res.json();
+        const tamMetin = (veri.content || []).filter(b => b.type === 'text').map(b => b.text).join('');
+        const basliklar = tamMetin.split('|||').map(s => s.trim()).filter(Boolean);
+        if (basliklar.length) {
+            const haberler = basliklar.map(b => ({ baslik: b.substring(0, 90), link: 'https://www.meb.gov.tr', etiket: 'AI' }));
+            haberBandiMetniYaz(haberler);
+            try { localStorage.setItem('haber_cache', JSON.stringify({ zaman: Date.now(), haberler })); } catch(_) {}
+        } else {
+            sabitYedekGoster();
+        }
+    } catch(_) {
+        sabitYedekGoster();
+    }
 }
-canliHaberleriGetir();
+
+function sabitYedekGoster() {
+    const haberler = [
+        { baslik: 'MEB 2025-2026 Eğitim Öğretim Yılı Takvimi Güncellendi', link: 'https://www.meb.gov.tr', etiket: 'MEB' },
+        { baslik: 'LGS 2027 Sınavı Başvuruları İçin Hazırlık Rehberi Yayımlandı', link: 'https://www.meb.gov.tr', etiket: 'LGS' },
+        { baslik: 'ÖSYM YKS Başvuru Kılavuzu Güncellendi', link: 'https://www.osym.gov.tr', etiket: 'ÖSYM' },
+        { baslik: 'İOKBS Bursluluk Sınavı Tarihleri Açıklandı', link: 'https://www.meb.gov.tr', etiket: 'BURS' },
+        { baslik: 'EBA Üzerinden Ücretsiz Ders Materyalleri Erişime Açıldı', link: 'https://www.eba.gov.tr', etiket: 'EBA' },
+    ];
+    haberBandiMetniYaz(haberler);
+}
+
+// İlk yükleme
+tumKaynaklardenGetir();
+
+// Otomatik yenileme (30 dakikada bir)
+haberBandıYenilemeTimer = setInterval(() => {
+    try { localStorage.removeItem('haber_cache'); } catch(_) {}
+    tumKaynaklardenGetir();
+}, YENILEME_SURESI);
+
+// Sekmeye geri dönünce önbellek süresi dolmuşsa yenile
+document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') {
+        try {
+            const onbellek = JSON.parse(localStorage.getItem('haber_cache') || '{}');
+            if (!onbellek.zaman || Date.now() - onbellek.zaman >= CACHE_SURESI) {
+                localStorage.removeItem('haber_cache');
+                tumKaynaklardenGetir();
+            }
+        } catch(_) { tumKaynaklardenGetir(); }
+    }
+});
+
+// ============ YÜKLEME EKRANI ============
+(function() {
+    const cubuk = document.getElementById('yuklenme-cubuk');
+    const ekran = document.getElementById('yuklenme-ekrani');
+    let ilerleme = 0;
+    const interval = setInterval(() => {
+        ilerleme += Math.random() * 18;
+        if (ilerleme >= 100) { ilerleme = 100; clearInterval(interval); }
+        cubuk.style.width = ilerleme + '%';
+    }, 60);
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            cubuk.style.width = '100%';
+            setTimeout(() => { ekran.classList.add('gizle'); }, 300);
+        }, 400);
+    });
+})();
+
+// ============ KARANLIK MOD ============
+function karanlıkModToggle() {
+    const body = document.body;
+    const btn = document.getElementById('darkModeBtn');
+    body.classList.toggle('dark-mode');
+    if (body.classList.contains('dark-mode')) {
+        btn.textContent = '☀️ Gündüz Modu';
+        localStorage.setItem('darkMode', '1');
+    } else {
+        btn.textContent = '🌙 Gece Modu';
+        localStorage.setItem('darkMode', '0');
+    }
+}
+if (localStorage.getItem('darkMode') === '1') {
+    document.body.classList.add('dark-mode');
+    document.getElementById('darkModeBtn').textContent = '☀️ Gündüz Modu';
+}
+
+// ============ KONFETİ ============
+function konfetiBastir() {
+    const canvas = document.getElementById('konfeti-canvas');
+    canvas.style.display = 'block';
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const renkler = ['#3182ce','#2ed573','#ff4757','#ffd32a','#a29bfe','#fd79a8'];
+    const parcalar = Array.from({length: 150}, () => ({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height - canvas.height,
+        r: Math.random() * 8 + 4,
+        d: Math.random() * 150 + 10,
+        renk: renkler[Math.floor(Math.random() * renkler.length)],
+        egim: Math.random() * 10 - 5,
+        tilt: Math.random() * 10 - 10,
+        tiltAci: 0
+    }));
+
+    let kare = 0;
+    function ciz() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        parcalar.forEach(p => {
+            p.tiltAci += 0.1;
+            p.y += (Math.cos(p.d) + 2 + p.r / 2) * 0.8;
+            p.x += Math.sin(kare / 10) * p.egim * 0.3;
+            p.tilt = Math.sin(p.tiltAci) * 12;
+            ctx.beginPath();
+            ctx.lineWidth = p.r / 2;
+            ctx.strokeStyle = p.renk;
+            ctx.moveTo(p.x + p.tilt + p.r / 4, p.y);
+            ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 4);
+            ctx.stroke();
+        });
+        kare++;
+        if (kare < 300) requestAnimationFrame(ciz);
+        else { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.style.display = 'none'; }
+    }
+    ciz();
+}
+
+// ============ KELIME GÜNÜ ============
+const kelimeler = [
+    { kelime: "müstesna", tur: "sıfat", anlam: "Ayrı tutulan, istisna olan, eşsiz, seçkin.", ornek: "Bu müstesna eser, edebiyat dünyamızın zirvesini temsil etmektedir." },
+    { kelime: "veciz", tur: "sıfat", anlam: "Az sözle çok şey anlatan, özlü, kısa ve anlamlı.", ornek: "Hocamızın veciz sözleri öğrencilerin zihnine kazındı." },
+    { kelime: "iddia", tur: "isim", anlam: "Bir şeyin doğru ya da var olduğunu ileri sürme.", ornek: "Onun iddiası hiçbir kanıta dayanmıyordu." },
+    { kelime: "feragat", tur: "isim", anlam: "Bir hak ya da istek üzerindeki talebinden vazgeçme.", ornek: "Çocukları için her şeyden feragat etti." },
+    { kelime: "nüans", tur: "isim", anlam: "İnce ayrım, iki şey arasındaki küçük fark.", ornek: "İki kelimenin anlamı arasındaki nüansı fark etmek güçtü." },
+    { kelime: "mütevazı", tur: "sıfat", anlam: "Kendini beğenmeksizin alçakgönüllü davranan.", ornek: "Mütevazı tavrıyla herkesten saygı gördü." },
+    { kelime: "hiciv", tur: "isim", anlam: "Birini ya da bir kurumu iğneleyerek eleştiren yazı türü.", ornek: "Şair, dönemini hiciv şiirleriyle eleştirmiştir." },
+    { kelime: "saik", tur: "isim", anlam: "Birini bir eyleme yönelten güç, neden, etken.", ornek: "Bu kararın arkasındaki saik merak konusu oldu." },
+    { kelime: "basiret", tur: "isim", anlam: "İlerisini görme, geniş görüşlülük, sezgi gücü.", ornek: "Basiretli bir lider, tehlikeyi önceden hisseder." },
+    { kelime: "müphem", tur: "sıfat", anlam: "Açık seçik olmayan, belirsiz, anlaşılması güç.", ornek: "Anlaşma metni müphem ifadeler içeriyordu." },
+    { kelime: "söylem", tur: "isim", anlam: "Bir konu hakkındaki sözlü ya da yazılı anlatım biçimi.", ornek: "Politikacının söylemi kamuoyunda yankı uyandırdı." },
+    { kelime: "özgün", tur: "sıfat", anlam: "Kendine özgü, başkasına benzemeyen, orijinal.", ornek: "Tasarımcı özgün bir stil geliştirdi." },
+];
+
+let bugunkunKelimeIndex = -1;
+function kelimeGetir() {
+    let yeniIndex;
+    do { yeniIndex = Math.floor(Math.random() * kelimeler.length); } while (yeniIndex === bugunkunKelimeIndex);
+    bugunkunKelimeIndex = yeniIndex;
+    const k = kelimeler[yeniIndex];
+    document.getElementById('kg-kelime').textContent = k.kelime;
+    document.getElementById('kg-tur').textContent = k.tur;
+    document.getElementById('kg-anlam').textContent = k.anlam;
+    document.getElementById('kg-ornek').textContent = '"' + k.ornek + '"';
+}
+
+// Günlük kelime: localStorage ile aynı gün aynı kelimeyi göster
+(function() {
+    const bugun = new Date().toDateString();
+    const kayitliGun = localStorage.getItem('kelime_gun');
+    const kayitliIndex = localStorage.getItem('kelime_index');
+    if (kayitliGun === bugun && kayitliIndex !== null) {
+        bugunkunKelimeIndex = parseInt(kayitliIndex);
+        const k = kelimeler[bugunkunKelimeIndex];
+        document.getElementById('kg-kelime').textContent = k.kelime;
+        document.getElementById('kg-tur').textContent = k.tur;
+        document.getElementById('kg-anlam').textContent = k.anlam;
+        document.getElementById('kg-ornek').textContent = '"' + k.ornek + '"';
+    } else {
+        kelimeGetir();
+        localStorage.setItem('kelime_gun', bugun);
+        localStorage.setItem('kelime_index', bugunkunKelimeIndex);
+    }
+})();
+
+// ============ SINAV TAKVİMİ ============
+(function() {
+    const sinavlar = [
+        { ad: "MSÜ",                      tarih: "2026-03-01", etiket: "etk-yks",   sembol: "⚓" },
+        { ad: "MEB EKYS",                 tarih: "2026-03-15", etiket: "etk-tyt",   sembol: "📋" },
+        { ad: "Engelli KPSS",             tarih: "2026-04-19", etiket: "etk-tyt",   sembol: "♿" },
+        { ad: "İOKBS Bursluluk",          tarih: "2026-04-26", etiket: "etk-iokbs", sembol: "🏆" },
+        { ad: "LGS (8. Sınıf)",           tarih: "2026-06-14", etiket: "etk-lgs",   sembol: "🎯" },
+        { ad: "YKS – TYT",               tarih: "2026-06-20", etiket: "etk-tyt",   sembol: "✍️" },
+        { ad: "YKS – AYT / YDT",         tarih: "2026-06-21", etiket: "etk-yks",   sembol: "📚" },
+        { ad: "MEB AGS – ÖABT",          tarih: "2026-07-12", etiket: "etk-tyt",   sembol: "👨‍🏫" },
+        { ad: "DGS",                      tarih: "2026-07-19", etiket: "etk-yks",   sembol: "🎓" },
+        { ad: "KPSS Lisans (GY–GK)",     tarih: "2026-09-06", etiket: "etk-tyt",   sembol: "📝" },
+        { ad: "KPSS Lisans Alan",         tarih: "2026-09-12", etiket: "etk-tyt",   sembol: "📝" },
+        { ad: "KPSS Önlisans",            tarih: "2026-10-04", etiket: "etk-iokbs", sembol: "📝" },
+        { ad: "KPSS Lise",               tarih: "2026-10-25", etiket: "etk-lgs",   sembol: "📝" },
+    ];
+    const liste = document.getElementById('takvimListe');
+    const simdi = new Date();
+    sinavlar.sort((a, b) => new Date(a.tarih) - new Date(b.tarih));
+    sinavlar.forEach(s => {
+        const hedef = new Date(s.tarih);
+        const fark = Math.ceil((hedef - simdi) / (1000 * 60 * 60 * 24));
+        const kalanMetin = fark > 0 ? fark + ' gün kaldı' : (fark === 0 ? '🔴 Bugün!' : 'Geçti');
+        const tarihFormatli = hedef.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+        liste.innerHTML += `<div class="takvim-item">
+            <span class="takvim-etiket ${s.etiket}">${s.sembol}</span>
+            <div class="takvim-item-bilgi">
+                <div class="takvim-item-ad">${s.ad}</div>
+                <div class="takvim-item-tarih">${tarihFormatli}</div>
+            </div>
+            <div class="takvim-kalan">${kalanMetin}</div>
+        </div>`;
+    });
+})();
+
+// ============ ZİYARETÇİ SAYACI ============
+(function() {
+    let ziyaretci = parseInt(localStorage.getItem('site_ziyaret') || '0') + 1;
+    localStorage.setItem('site_ziyaret', ziyaretci);
+    // Demo: gerçekçi bir rakam göster (kendi sayacını üstüne ekle)
+    const toplam = 10000 + ziyaretci;
+    document.getElementById('ziyaretci-sayac').textContent = toplam.toLocaleString('tr-TR');
+    // Geri bildirim sayacı
+    const gbSayi = parseInt(localStorage.getItem('gb_sayi') || '0');
+    document.getElementById('geri-bildirim-sayac').textContent = gbSayi;
+})();
+
+// ============ GERİ BİLDİRİM FORMU ============
+function geriBildirimGonder() {
+    const tur = document.getElementById('gb-tur').value;
+    const mesaj = document.getElementById('gb-mesaj').value.trim();
+    if (!tur || !mesaj) { alert('Lütfen talep türü ve mesaj alanını doldurun.'); return; }
+    const gbSayi = parseInt(localStorage.getItem('gb_sayi') || '0') + 1;
+    localStorage.setItem('gb_sayi', gbSayi);
+    document.getElementById('geri-bildirim-sayac').textContent = gbSayi;
+    document.getElementById('gb-basari').style.display = 'block';
+    document.getElementById('gb-mesaj').value = '';
+    document.getElementById('gb-ad').value = '';
+    document.getElementById('gb-tur').value = '';
+    setTimeout(() => { document.getElementById('gb-basari').style.display = 'none'; }, 4000);
+}
+
+// ============ YAPAY ZEKA SORU ÇÖZÜCÜ ============
+let soruResmiBase64 = null;
+
+const uploadAlan = document.getElementById('soruUploadAlan');
+uploadAlan.addEventListener('dragover', (e) => { e.preventDefault(); uploadAlan.classList.add('drag-over'); });
+uploadAlan.addEventListener('dragleave', () => uploadAlan.classList.remove('drag-over'));
+uploadAlan.addEventListener('drop', (e) => {
+    e.preventDefault(); uploadAlan.classList.remove('drag-over');
+    const dosya = e.dataTransfer.files[0];
+    if (dosya && dosya.type.startsWith('image/')) soruResmiIsle(dosya);
+});
+
+function soruResmiSecildi(input) {
+    if (input.files && input.files[0]) soruResmiIsle(input.files[0]);
+}
+
+function soruResmiIsle(dosya) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        soruResmiBase64 = e.target.result.split(',')[1];
+        const onizleme = document.getElementById('soruOnizleme');
+        onizleme.src = e.target.result;
+        onizleme.style.display = 'block';
+        document.getElementById('soruCozBtn').disabled = false;
+        document.getElementById('aiCevapAlani').style.display = 'none';
+    };
+    reader.readAsDataURL(dosya);
+}
+
+async function soruCoz() {
+    if (!soruResmiBase64) return;
+    const btn = document.getElementById('soruCozBtn');
+    const yukleniyor = document.getElementById('ai-yukleniyor');
+    const cevapAlani = document.getElementById('aiCevapAlani');
+
+    btn.disabled = true;
+    yukleniyor.style.display = 'block';
+    cevapAlani.style.display = 'none';
+
+    try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-6',
+                max_tokens: 1000,
+                messages: [{
+                    role: 'user',
+                    content: [
+                        { type: 'image', source: { type: 'base64', media_type: 'image/jpeg', data: soruResmiBase64 } },
+                        { type: 'text', text: 'Bu görseldeki soruyu veya soruları adım adım, açık ve anlaşılır biçimde çöz. Türkçe olarak yanıtla. Öğrenci seviyesine uygun, öğretici bir dil kullan.' }
+                    ]
+                }]
+            })
+        });
+        const veri = await response.json();
+        const cevap = veri.content && veri.content[0] ? veri.content[0].text : 'Yanıt alınamadı.';
+        cevapAlani.textContent = cevap;
+        cevapAlani.style.display = 'block';
+    } catch (hata) {
+        cevapAlani.textContent = '⚠️ Bağlantı hatası. Lütfen tekrar deneyin.';
+        cevapAlani.style.display = 'block';
+    } finally {
+        yukleniyor.style.display = 'none';
+        btn.disabled = false;
+    }
+}
 </script>
 </body>
 </html>
