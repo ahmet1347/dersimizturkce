@@ -1,1 +1,41 @@
-
+exports.handler = async function(event, context) {
+  if (event.httpMethod !== 'POST') {
+    return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+  try {
+    const { imageBase64 } = JSON.parse(event.body);
+    if (!imageBase64) {
+      return { statusCode: 400, body: JSON.stringify({ error: 'Görsel eksik.' }) };
+    }
+    const API_KEY = process.env.OPENROUTER_API_KEY;
+    if (!API_KEY) {
+      return { statusCode: 500, body: JSON.stringify({ error: 'API anahtarı tanımlı değil.' }) };
+    }
+    const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + API_KEY
+      },
+      body: JSON.stringify({
+        model: 'google/gemma-4-26b-a4b-it:free',
+        max_tokens: 1024,
+        messages: [{
+          role: 'user',
+          content: [
+            { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,' + imageBase64 } },
+            { type: 'text', text: 'Sen Türkçe, Matematik, Fen Bilimleri, Fizik, Kimya, Biyoloji, Tarih, Coğrafya ve tüm derslerde uzman bir LGS/TYT/AYT sınav koçusun. Görseldeki soruyu dikkatlice oku ve ders türünü belirle. Her şıkkı tek tek değerlendir. Cevabını şu formatta ver:\n✅ Doğru Cevap: [Şık]\n📝 Açıklama: [Neden doğru, adım adım çöz]\n❌ Diğer şıklar neden yanlış: [Kısaca açıkla]\nMatematikte işlemleri adım adım göster. Türkçede anlam analizini yap. Fende formül ve kavramları açıkla. Türkçe yanıtla.' }
+          ]
+        }]
+      })
+    });
+    const veri = await response.json();
+    if (veri.error) {
+      return { statusCode: 400, body: JSON.stringify({ error: veri.error.message }) };
+    }
+    const cevap = veri.choices?.[0]?.message?.content || 'Yanıt alınamadı.';
+    return { statusCode: 200, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cevap }) };
+  } catch (hata) {
+    return { statusCode: 500, body: JSON.stringify({ error: 'Sunucu hatası: ' + hata.message }) };
+  }
+};
