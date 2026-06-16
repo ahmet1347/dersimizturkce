@@ -1,4 +1,2 @@
 [build]
-  # remove or set an appropriate command for your project
-  command = ""
-  publish = "public"
+publish = "."
