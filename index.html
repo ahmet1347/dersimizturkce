@@ -1974,20 +1974,35 @@ async function soruCoz() {
     yukleniyor.style.display = 'block';
     cevapAlani.style.display = 'none';
 
+    const OR_API_KEY = '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';
     try {
-        const response = await fetch('/.netlify/functions/soru-coz', {
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ imageBase64: soruResmiBase64 })
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + OR_API_KEY
+            },
+            body: JSON.stringify({
+                model: 'google/gemma-4-26b-a4b-it:free',
+                max_tokens: 1024,
+                messages: [{
+                    role: 'user',
+                    content: [
+                        { type: 'image_url', image_url: { url: 'data:image/jpeg;base64,' + soruResmiBase64 } },
+                        { type: 'text', text: 'Sen Türkçe, Matematik, Fen Bilimleri, Fizik, Kimya, Biyoloji, Tarih, Coğrafya ve tüm derslerde uzman bir LGS/TYT/AYT sınav koçusun. Görseldeki soruyu dikkatlice oku ve ders türünü belirle. Her şıkkı tek tek değerlendir. Cevabını şu formatta ver:\n✅ Doğru Cevap: [Şık]\n📝 Açıklama: [Neden doğru, adım adım çöz]\n❌ Diğer şıklar neden yanlış: [Kısaca açıkla]\nMatematikte işlemleri adım adım göster. Türkçede anlam analizini yap. Fende formül ve kavramları açıkla. Türkçe yanıtla.' }
+                    ]
+                }]
+            })
         });
         const veri = await response.json();
         if (veri.error) {
-            cevapAlani.textContent = '⚠️ Hata: ' + veri.error;
+            cevapAlani.textContent = '⚠️ API Hatası: ' + veri.error.message;
             cevapAlani.style.display = 'block';
             return;
         }
+        const cevap = veri.choices && veri.choices[0] ? veri.choices[0].message.content : 'Yanıt alınamadı.';
         cevapAlani.style.whiteSpace = 'pre-wrap';
-        cevapAlani.textContent = veri.cevap;
+        cevapAlani.textContent = cevap;
         cevapAlani.style.display = 'block';
     } catch (hata) {
         cevapAlani.textContent = '⚠️ Hata: ' + hata.message;
