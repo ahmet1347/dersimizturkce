@@ -1,7 +1,4 @@
 [build]
-publish = "public"
-command = "npm run build"
-
-# Optional: set base
-# [context.production.environment]
-#   NODE_VERSION = "18"
+  # remove or set an appropriate command for your project
+  command = ""
+  publish = "public"
