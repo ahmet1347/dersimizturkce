@@ -1,9 +1,7 @@
-[
-build
-]
-  functions = "netlify/fonksiyonlar"
+[build]
+publish = "public"
+command = "npm run build"
 
-[
-functions
-]
-  node_bundler = "esbuild"
+# Optional: set base
+# [context.production.environment]
+#   NODE_VERSION = "18"
