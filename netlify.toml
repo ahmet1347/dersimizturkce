@@ -1,6 +1,2 @@
 [build]
   publish = "."
-  functions = ""
-
-[build.environment]
-  OPENROUTER_API_KEY = ""
