@@ -1,2 +1,5 @@
 [build]
-publish = "."
+  publish = "."
+
+[build.environment]
+  OPENROUTER_API_KEY = ""
